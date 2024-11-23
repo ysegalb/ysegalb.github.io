@@ -1,0 +1,27 @@
+title: Yair Segura Albarracin
+email: ysegalb at gmail.com
+description: >-
+  Sitio personal de Yair Segura Albarracín. Desarrollador de software Aquí abandono mis ideas, tutoriales y proyectos.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://ysegalb.github.io"
+github_username: ysegalb
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Define header pages order
+header_pages:
+  - about.md
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
