@@ -10,4 +10,4 @@ He trabajado en varias empresas y ya voy camino de los 20 años de experiencia. 
 
 He podido picotear de muchos mundos, como programador he tocado desde tecnologías HOST (Natural/Adabas) en pantallitas verdes hasta el omnipresente Java. Sin olvidar el gran mundo de la infraestructura en su modalidad _cloud_.
 
-Si quieres que trate algún tema en particular o preguntarme cualquier cosa, puedes contactarme a través de X [@yairsegura](https://x.com/yairsegura) o [LinkedIn](https://www.linkedin.com/in/yairsegura/).
+Si quieres que trate algún tema en particular o preguntarme cualquier cosa, puedes contactarme a través de X [@yairsegura](https://x.com/ysegalb) o [LinkedIn](https://www.linkedin.com/in/yairsegura/).
