@@ -5,21 +5,21 @@ date: 2024-12-05
 categories: [tutorial, IA]
 ---
 
-## ¿Por qué esto no son otros calcetines con IA?
-
 Hoy en día, hemos asistido a la explosión de la IA y, en particular, de los LLM generativos como ChatGPT. Es difícil encontrar un producto que, habiendo sido actualizado o lanzado en el último año, no lleve alguna referencia a la IA. Además, habiendo vivido otras revoluciones similares, sabemos que en muchas ocasiones se fuerzan los casos de uso para decir que están hechos con Inteligencia Artificial. Esto ha generado una saturación en el mercado e, incluso, a veces, cierto recelo cuando vemos las consabidas siglas.
 
-¿Quiere decir eso que su aplicación no es útil? Para nada. Hay casos que, si bien pueden no ser novedosos en cuanto al planteamiento, se han convertido en soluciones mucho más asequibles, tanto para desarrollar como para mantener. Y uno de esos casos es el que vamos a presentar en este tutorial.
+¿Quiere decir eso que su aplicación no es útil? Para nada. Hay casos que, si bien pueden no ser novedosos en cuanto al planteamiento, se han convertido en soluciones mucho más asequibles, tanto para desarrollar como para mantener. Y uno de esos casos es el que vamos a presentar en este tutorial. Y con ello responderemos a la pregunta:
+
+**¿Por qué esto no son otros calcetines con IA?**
 
 Si alguna vez habéis tenido relación con un centro de atención al cliente, sabréis que todas las conversaciones son almacenadas, ya sea en forma de audios o como chats con los agentes. Esto es necesario para aportar trazabilidad a los procesos, gestionar reclamaciones, etc. Por lo tanto, es algo que ya tenemos de base: una gran cantidad de información por explotar. Lo que propongo con este tutorial es aplicar los LLM al análisis de esos datos para mejorar los procesos de las compañías y, por supuesto, la atención al cliente.
 
 Veremos cómo, de una manera muy sencilla, podemos procesar las transcripciones de esas conversaciones para obtener datos valiosos que ayuden a mejorar: resúmenes de las conversaciones, categorización, detección del tono de la conversación e, incluso, una lista de palabras clave.
 
-## ¿Por dónde empezamos?
+# ¿Por dónde empezamos?
 
 El proyecto está organizado siguiendo una estructura muy sencilla, ya que es únicamente una prueba de concepto. Para su uso en producción, requeriría trabajo adicional, que comentaremos en los últimos puntos, incluyendo posibles mejoras y aspectos que podemos implementar para acercarnos más al mundo de la IA.
 
-### Estructura del proyecto
+## Estructura del proyecto
 
 La estructura del proyecto es la siguiente:
 
@@ -50,30 +50,30 @@ Esta estructura permite separar los distintos módulos según su responsabilidad
 
 Además el proyecto incluye un README.md con las instrucciones para ejecutar.
 
-### Modelos utilizados
+## Modelos utilizados
 
 En este proyecto, he utilizado distintos modelos capaces de procesar el lenguaje natural (NLP) para analizar varios aspectos de las conversaciones.
 Estos modelos se han seleccionado por su buen rendimiento en tareas de NLP en español y su capacidad para procesar el lenguaje en contexto. Todos los modelos están disponibles de forma gratuita en [Hugging Face](https://huggingface.co/).
 
-#### Análisis de sentimientos
+### Análisis de sentimientos
 
 Utilizo el modelo `nmarinnn/bert-bregman` para determinar el tono emocional de la conversación. El resultado será un valor que podemos interpretar como negativo, positivo o neutro.
 
-#### Clasificación de texto
+### Clasificación de texto
 
 Empleo un modelo personalizado basado en `bert-base-spanish-wwm-cased` para categorizar el tipo de incidencia. El entrenamiento del modelo asocia frases de ejemplo con las etiquetas que queremos gestionar, permitiéndonos así establecer las categorías que necesitemos.
 
-#### Generación de resúmenes
+### Generación de resúmenes
 
 Utilizo el modelo `mrm8488/bert-spanish-cased-finetuned-summarization` para crear resúmenes concisos de las conversaciones. Es importante tener cuidado si el tamaño del resumen supera al del texto original, ya que puede empezar a alucinar, generando contenido adicional hasta alcanzar el tamaño deseado.
 
-#### Reconocimiento de entidades nombradas (NER)
+### Reconocimiento de entidades nombradas (NER)
 
 Las entidades nombradas son simplemente palabras clave. Para obtener un resultado coherente y significativo, además de aplicar el modelo `dccuchile/bert-base-spanish-wwm-cased` para extraer palabras clave relevantes, realizo un postproceso con _SpaCy_ para filtrar únicamente sustantivos, adjetivos y adverbios. De esta forma, evitamos que aparezcan palabras como artículos, preposiciones, etc., que no aportan significado.
 
-## Al turrón: analicemos el código
+# Al turrón: analicemos el código
 
-### Configuración general
+## Configuración general
 <!-- file: app/configuration.py -->
 ```python
 
@@ -110,7 +110,7 @@ MODEL_PATHS = {
 
 Aquí definimos las configuraciones globales, como los modelos a utilizar, el uso de CUDA o CPU para la ejecución, etc. De esta forma, ganamos flexibilidad y mantenemos un único punto de gestión para los datos variables. Esto se puede mejorar añadiendo parámetros adicionales para la configuración de los LLM. Todos los valores se pueden especificar como variables de entorno o definir en un archivo .env, tal como se indica en el README del proyecto.
 
-### Servicios de análisis
+## Servicios de análisis
 
 <!-- file: app/services/sentiment_analysis.py -->
 ```python
@@ -287,14 +287,14 @@ Aquí estamos definiendo una API muy sencilla, con un único endpoint POST en el
 
 Podemos observar que, al tratarse de un texto corto y de un modelo preentrenado sin ajustes específicos, el resumen no es de gran calidad. Por supuesto, existen alternativas de pago mucho más fiables y, dedicando tiempo y cuidado, también es posible obtener buenos resultados con modelos gratuitos.
 
-## Conclusiones
+# Conclusiones
 
 Como podemos ver, no todo es humo en el mundo de la IA. Hay aplicaciones que, de forma tradicional, nos costarían muchísimo más, tanto en trabajo como en mantenibilidad. Es importante saber identificar los casos de uso donde estas soluciones aportan valor y aprovecharlos sin dudar.
 
 Aunque este proyecto no es apto para un sistema real, sí puede servirnos como punto de partida para plantearnos lo que podríamos llegar a conseguir integrando este tipo de soluciones en el portafolio de nuestra compañía. Los próximos pasos a seguir nos pueden dar una idea de hasta qué punto podemos mejorar esta solución y aproximarnos a un sistema que aproveche la potencia que los LLM ofrecen para optimizar tanto nuestros procesos como la relación que mantenemos con los clientes.
 
 
-### Posibles próximos pasos
+## Posibles próximos pasos
 
 * Implementar un sistema de logging para rastrear el uso de la API, monitorear el rendimiento y detectar errores.
 * Añadir autenticación y autorización: todas nuestras aplicaciones deben estar correctamente protegidas frente a un uso fraudulento.
@@ -307,24 +307,41 @@ Aunque este proyecto no es apto para un sistema real, sí puede servirnos como p
 
 Hay multitud de posibilidades para hacer crecer el proyecto, y seguro que si le preguntamos a ChatGPT, nos puede sugerir alguna más 😉.
 
-## Glosario de términos
+# Glosario de términos
 
 🤖_generated by IA_
-* LLM (Large Language Model): Un tipo de modelo de inteligencia artificial especializado en el procesamiento de lenguaje natural y la generación de texto.
-* Trazabilidad: Capacidad de rastrear y verificar el historial, uso o localización de un producto o información en un proceso.
-* EndPoints: Puntos de acceso en una API (Interfaz de Programación de Aplicaciones) que permiten la comunicación entre diferentes sistemas.
-* Pipeline: En el contexto de aprendizaje automático, una serie de pasos o transformaciones aplicadas a los datos para entrenar o utilizar un modelo.
-* CUDA: Una plataforma de computación paralela desarrollada por NVIDIA, que permite utilizar las GPU para procesamiento en lugar de la CPU.
-* API Router: Un sistema de rutas en una API que organiza y redirige solicitudes a diferentes endpoints según la funcionalidad requerida.
-* Modelo BERT: Un tipo de modelo de aprendizaje automático para procesamiento de lenguaje natural que permite entender el contexto completo de una palabra en una oración.
-* Pydantic: Biblioteca de validación de datos para Python que facilita la creación de modelos de datos basados en clases.
-* SpaCy: Herramienta avanzada de procesamiento de lenguaje natural (NLP) en Python, utilizada para análisis léxico y morfológico del texto.
-* NER (Named Entity Recognition): Técnica de procesamiento de lenguaje natural que permite identificar nombres de personas, organizaciones, lugares, etc., en un texto.
-* Postprocesamiento: Paso en el procesamiento de datos que se realiza después de la ejecución de un modelo, para mejorar o ajustar los resultados obtenidos.
-* Softmax: Función matemática utilizada en modelos de aprendizaje automático para normalizar valores en probabilidades.
-* Inferencia: En el contexto de IA, proceso de aplicar un modelo entrenado para hacer predicciones o clasificaciones en datos nuevos.
-* Retroalimentación (Feedback): Proceso de ajuste o mejora continua mediante el análisis de resultados o respuestas, especialmente importante en el entrenamiento de modelos de IA.
-* NRT (Near Real-Time): Procesamiento casi en tiempo real, permitiendo obtener datos o resultados poco después de la entrada de datos.
+<dl>
+<dt>LLM (Large Language Model)</dt>
+<dd>Un tipo de modelo de inteligencia artificial especializado en el procesamiento de lenguaje natural y la generación de texto.</dd>
+<dt>Trazabilidad</dt>
+<dd>Capacidad de rastrear y verificar el historial, uso o localización de un producto o información en un proceso.</dd>
+<dt>EndPoints</dt>
+<dd>Puntos de acceso en una API (Interfaz de Programación de Aplicaciones) que permiten la comunicación entre diferentes sistemas.</dd>
+<dt>Pipeline</dt>
+<dd>En el contexto de aprendizaje automático, una serie de pasos o transformaciones aplicadas a los datos para entrenar o utilizar un modelo.</dd>
+<dt>CUDA</dt>
+<dd>Una plataforma de computación paralela desarrollada por NVIDIA, que permite utilizar las GPU para procesamiento en lugar de la CPU.</dd>
+<dt>API Router</dt>
+<dd>Un sistema de rutas en una API que organiza y redirige solicitudes a diferentes endpoints según la funcionalidad requerida.</dd>
+<dt> Modelo BERT</dt>
+<dd>Un tipo de modelo de aprendizaje automático para procesamiento de lenguaje natural que permite entender el contexto completo de una palabra en una oración.</dd>
+<dt>Pydantic</dt>
+<dd>Biblioteca de validación de datos para Python que facilita la creación de modelos de datos basados en clases.</dd>
+<dt>SpaCy</dt>
+<dd>Herramienta avanzada de procesamiento de lenguaje natural (NLP) en Python, utilizada para análisis léxico y morfológico del texto.</dd>
+<dt>NER (Named Entity Recognition)</dt>
+<dd>Técnica de procesamiento de lenguaje natural que permite identificar nombres de personas, organizaciones, lugares, etc., en un texto.</dd>
+<dt>Postprocesamiento</dt>
+<dd>Paso en el procesamiento de datos que se realiza después de la ejecución de un modelo, para mejorar o ajustar los resultados obtenidos.</dd>
+<dt>Softmax</dt>
+<dd>Función matemática utilizada en modelos de aprendizaje automático para normalizar valores en probabilidades.</dd>
+<dt>Inferencia</dt>
+<dd>En el contexto de IA, proceso de aplicar un modelo entrenado para hacer predicciones o clasificaciones en datos nuevos.</dd>
+<dt>Retroalimentación (Feedback)</dt>
+<dd>Proceso de ajuste o mejora continua mediante el análisis de resultados o respuestas, especialmente importante en el entrenamiento de modelos de IA.</dd>
+<dt>NRT (Near Real-Time)</dt>
+<dd>Procesamiento casi en tiempo real, permitiendo obtener datos o resultados poco después de la entrada de datos.</dd>
+</dl>
 
 ## Referencias
 

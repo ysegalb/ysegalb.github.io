@@ -7,14 +7,19 @@ url: "https://ysegalb.github.io"
 github_username: ysegalb
 
 # Build settings
-theme: minima
+# theme: minima
+remote_theme: jekyll/minima@6b9b78dad3e5c9f733c901e10287465735b36169 # Commit 02/10/2024
 plugins:
+  - jekyll-remote-theme # add this line to enable remote theme feature
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Define header pages order
 header_pages:
   - about.md
+
+# show_excerpts: true # Show the first part of the post inline
 
 # Exclude from processing
 exclude:
@@ -25,3 +30,20 @@ exclude:
   - Gemfile.lock
   - node_modules/
   - vendor/
+
+minima:
+  skin: auto
+#  date_format: "%d %B %Y, %s segundos después de 1970"
+  date_format: "%F, publicado %s segundos después de 1970"
+  social_links:
+    - { platform: github, user_url: "https://github.com/ysegalb"}
+    - { platform: x, user_url: "https://x.com/ysegalb"}
+    - { platform: twitter, user_url: "https://twitter.com/ysegalb"}
+    - { platform: linkedin, user_url: "https://www.linkedin.com/in/yairsegura/"}
+
+# Avoid sitemap bot crawling through assets
+defaults:
+  - scope:
+      path: "assets/**/*"
+    values:
+      sitemap: false
